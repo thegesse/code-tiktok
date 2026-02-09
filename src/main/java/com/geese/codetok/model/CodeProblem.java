@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "code_problems")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,12 +19,14 @@ public class CodeProblem {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "dificulty_id")
-    private Difficulty dificulty;
+    @JoinColumn(name = "difficulty_id")
+    private Difficulty difficulty;
 
     @NotBlank
+    @Column(columnDefinition = "TEXT")
     private String code;
 
     @NotBlank
+    @Column(columnDefinition = "TEXT")
     private String answer;
 }

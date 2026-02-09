@@ -6,25 +6,28 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
-// @Table(name = "users") add this once table has been created
+@Table(name = "users")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Username is already taken")
-    @Column(unique = true)
+    @NotBlank(message = "Username is required")
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @NotBlank
-    private String password; // hash password
+    @NotBlank(message = "Password is required")
+    @Column(nullable = false)
+    private String password; //reminder to hash password
 
     @Email(message = "Please enter a valid email")
-    @Column(unique = true)
+    @NotBlank(message = "Email is required")
+    @Column(unique = true, nullable = false)
     private String email;
 }

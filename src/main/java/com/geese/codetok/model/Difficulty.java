@@ -8,19 +8,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "difficulty")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Difficulty {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "User_id")
-    private User userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @NotBlank
+    @NotBlank(message = "Difficulty level cannot be blank")
     private String level;
 }
