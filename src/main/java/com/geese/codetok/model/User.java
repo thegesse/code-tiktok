@@ -22,6 +22,10 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "difficulty_id")
+    private Difficulty difficulty;
+
     @NotBlank(message = "Password is required")
     @Column(nullable = false)
     private String password; //reminder to hash password

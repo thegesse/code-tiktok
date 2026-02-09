@@ -15,4 +15,14 @@ public class PageController {
     public String challengePage() {
         return "challenge";
     }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public String registerPage() {
+        return "register";
+    }
 }

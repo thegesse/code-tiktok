@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - CodeTok</title>
+</head>
+<body class="auth-page">
+<div class="auth-container">
+
+    <form th:action="@{/register}" method="post">
+        <input type="text" name="username" placeholder="Choose a Username" required>
+        <input type="email" name="email" placeholder="Email Address" required>
+        <select name="level" required>
+            <option value="" disabled selected>Select your skill level</option>
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="expert">Expert</option>
+        </select>
+        <input type="password" name="password" placeholder="Create Password" required>
+
+        <button type="submit" class="btn-primary">Create Account</button>
+    </form>
+
+    <div class="auth-footer">
+        Already a member? <a th:href="@{/login}">Login</a>
+    </div>
+</div>
+</body>
+</html>

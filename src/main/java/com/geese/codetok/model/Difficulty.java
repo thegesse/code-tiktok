@@ -18,10 +18,7 @@ public class Difficulty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @NotBlank(message = "Difficulty level cannot be blank")
+    @Column(unique = true)
     private String level;
 }

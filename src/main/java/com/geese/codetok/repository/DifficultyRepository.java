@@ -10,7 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface DifficultyRepository extends JpaRepository<Difficulty, Long> {
-    List<Difficulty> findByUser(User user);
-    List<Difficulty> findByUserId(Long userId);
     Optional<Difficulty> findByLevel(String level);
 }

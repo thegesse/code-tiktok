@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeTok - Index</title>
 </head>
-<body>
+<body class="index-page">
+<div class="hero-container">
+    <div class="logo-area">
+        <h1>Code<span>Tok</span></h1>
+    </div>
 
+    <div class="action-area">
+        <a th:href="@{/play}" class="btn-primary">Start Swiping</a>
+
+        <div class="auth-options">
+            <a th:href="@{/login}" class="btn-secondary">Login</a>
+            <a th:href="@{/register}" class="btn-outline">Sign Up</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

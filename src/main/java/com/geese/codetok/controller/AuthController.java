@@ -1,13 +1,15 @@
 package com.geese.codetok.controller;
 
+import ch.qos.logback.core.model.Model;
 import com.geese.codetok.service.auth.AuthService;
 import com.geese.codetok.model.User;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@CrossOrigin("*")
+@Controller
 public class AuthController {
     private final AuthService authService;
     @Autowired
@@ -16,19 +18,20 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        authService.registerNewUser(user);
-        return ResponseEntity.ok().build();
+    public String register(@ModelAttribute User user, @RequestParam String level) {
+        authService.registerNewUser(user, level);
+        return "redirect:/login";
     }
 
-    public record LoginRequest(String email, String password) {}
-
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        User user = authService.loginUser(request.email(), request.password());
+    public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
+        User user = authService.loginUser(email, password);
         if (user != null) {
-            return ResponseEntity.ok(user);
+            session.setAttribute("user", user);
+            return "redirect:/play";
+        } else {
+            model.addText("error");
+            return "login";
         }
-        return ResponseEntity.status(401).body("Invalid credentials");
     }
 }
