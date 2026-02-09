@@ -9,11 +9,15 @@ import java.util.Optional;
 
 @Service
 public class AuthService {
-    private UserRepository userRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    public AuthService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     public User registerNewUser(User user) {
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+        if (userRepository.existsByUsername(user.getUsername())) {
             throw new RuntimeException("Username is already in use");
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -22,7 +26,7 @@ public class AuthService {
 
     public User loginUser(String email, String password) {
         return userRepository.findByEmail(email)
-                .filter(user -> user.getPassword().equals(password))
+                .filter(user -> bCryptPasswordEncoder.matches(password, user.getPassword()))
                 .orElse(null);
     }
 }
