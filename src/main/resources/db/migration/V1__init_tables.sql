@@ -21,5 +21,3 @@ CREATE TABLE code_problems (
 
     CONSTRAINT fk_difficulty FOREIGN KEY (difficulty_id) REFERENCES difficulty(id)
 );
-
-INSERT INTO difficulty (level) VALUES ('Beginner'), ('Intermediate'), ('Expert');

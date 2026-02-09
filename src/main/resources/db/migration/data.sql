@@ -1,0 +1,1 @@
+INSERT INTO difficulty (level) VALUES ('Beginner'), ('Intermediate'), ('Expert');
