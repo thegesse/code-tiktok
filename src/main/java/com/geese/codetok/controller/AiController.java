@@ -1,7 +1,7 @@
 package com.geese.codetok.controller;
 
-import com.geese.codetok.service.AiService;
-import com.geese.codetok.service.PromptTopics;
+import com.geese.codetok.service.Ai.AiService;
+import com.geese.codetok.service.Ai.PromptTopics;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

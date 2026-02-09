@@ -1,6 +1,6 @@
 package com.geese.codetok.controller;
 
-import com.geese.codetok.service.AuthService;
+import com.geese.codetok.service.auth.AuthService;
 import com.geese.codetok.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,9 +1,10 @@
-package com.geese.codetok.service;
+package com.geese.codetok.service.problems;
 
 import com.geese.codetok.model.CodeProblem;
 import com.geese.codetok.model.Difficulty;
 import com.geese.codetok.repository.CodeProblemRepository;
 import com.geese.codetok.repository.DifficultyRepository;
+import com.geese.codetok.service.Ai.AiService;
 import org.springframework.stereotype.Service;
 
 @Service

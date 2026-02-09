@@ -1,4 +1,4 @@
-package com.geese.codetok.service;
+package com.geese.codetok.service.problems;
 
 import com.geese.codetok.model.Difficulty;
 import com.geese.codetok.repository.DifficultyRepository;

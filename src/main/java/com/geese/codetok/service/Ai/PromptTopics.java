@@ -1,4 +1,4 @@
-package com.geese.codetok.service;
+package com.geese.codetok.service.Ai;
 
 import org.springframework.stereotype.Service;
 

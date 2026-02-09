@@ -2,8 +2,8 @@ package com.geese.codetok.controller;
 
 import ch.qos.logback.core.model.Model;
 import com.geese.codetok.model.CodeProblem;
-import com.geese.codetok.service.CodeProblemService;
-import com.geese.codetok.service.PromptTopics;
+import com.geese.codetok.service.problems.CodeProblemService;
+import com.geese.codetok.service.Ai.PromptTopics;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,8 +31,6 @@ public class ChallengePageController {
             topic = promptTopics.getRandomTopicBeginner();
         }
         CodeProblem problem = codeProblemService.createNewProblem(level, topic);
-
-        // 3. Pass the object to the HTML
         model.addText("problem");
         model.addText("currentLevel");
 

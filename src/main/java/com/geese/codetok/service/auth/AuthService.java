@@ -1,11 +1,9 @@
-package com.geese.codetok.service;
+package com.geese.codetok.service.auth;
 
 import com.geese.codetok.repository.UserRepository;
 import com.geese.codetok.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AuthService {
