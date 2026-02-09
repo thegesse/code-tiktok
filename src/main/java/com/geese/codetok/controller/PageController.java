@@ -11,11 +11,6 @@ public class PageController {
         return "index";
     }
 
-    @GetMapping("/play")
-    public String challengePage() {
-        return "challenge";
-    }
-
     @GetMapping("/login")
     public String loginPage() {
         return "login";

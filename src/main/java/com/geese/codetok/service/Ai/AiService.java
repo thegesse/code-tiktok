@@ -26,9 +26,20 @@ public class AiService {
                 "Generate a short Java code snippet for a %s level programmer. " +
                         "The snippet must contain exactly one logical or syntax error. " +
                         "Topic: %s. " +
-                        "After the code, specify the exact error message.", level, topic);
-        GenerateContentResponse response = client.models.generateContent(model, prompt, null);
-        return response.text();
+                        "Return the response in this format: CODE: [code] ANSWER: [error message]", level, topic);
+
+        // This creates the empty config object the method is looking for
+        com.google.genai.types.GenerateContentConfig config =
+                com.google.genai.types.GenerateContentConfig.builder().build();
+
+        try {
+            // Pass all 3 arguments: model, prompt, and the config
+            GenerateContentResponse response = client.models.generateContent(this.model, prompt, config);
+            return response.text();
+        } catch (Exception e) {
+            System.err.println("AI Request Failed: " + e.getMessage());
+            return "CODE: System.out.println(\"Error\"); ANSWER: Error";
+        }
     }
 
     public String beginnerCodeProblem(String topic) {return getProblem("beginner", topic);}

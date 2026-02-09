@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codetok - Play</title>
+</head>
+<body class="play-page">
+    <div class="play-page">
+        <div class="feed-container">
+            <div class="code-card">
+                <div class="card-header">
+                    <span class="difficulty-badge" th:text="${problem.difficulty.level}">Beginner</span>
+                </div>
+
+                <div class="code-display">
+                    <pre><code th:text="${problem.code}">//Code appears here</code></pre>
+                </div>
+                <div class="interaction-aread">
+                    <form th:action="@{/check-answer}" method="post">
+                        <input type="hidden" name="problemId" th:value="${problem.id}">
+                        <input type="text" name="userAnswer" placeholder="your answer m'lady?">
+                        <button type="submit" class="btn-promary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

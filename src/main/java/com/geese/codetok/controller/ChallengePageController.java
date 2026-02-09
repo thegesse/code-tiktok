@@ -1,12 +1,13 @@
 package com.geese.codetok.controller;
 
-import ch.qos.logback.core.model.Model;
 import com.geese.codetok.model.CodeProblem;
+import com.geese.codetok.model.User;
 import com.geese.codetok.service.problems.CodeProblemService;
 import com.geese.codetok.service.Ai.PromptTopics;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model; // CORRECT IMPORT
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ChallengePageController {
@@ -18,11 +19,17 @@ public class ChallengePageController {
         this.promptTopics = promptTopics;
     }
 
-    @GetMapping("/challenge-page")
-    public String showChallengePage(
-            @RequestParam(defaultValue = "beginner") String level,
-            Model model) {
+    @GetMapping("/play")
+    public String showChallengePage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        String level = user.getDifficulty().getLevel();
         String topic;
+
         if (level.equalsIgnoreCase("intermediate")) {
             topic = promptTopics.getRandomTopicIntermediate();
         } else if (level.equalsIgnoreCase("expert")) {
@@ -31,9 +38,10 @@ public class ChallengePageController {
             topic = promptTopics.getRandomTopicBeginner();
         }
         CodeProblem problem = codeProblemService.createNewProblem(level, topic);
-        model.addText("problem");
-        model.addText("currentLevel");
 
-        return "challenge";
+        model.addAttribute("problem", problem);
+        model.addAttribute("currentLevel", level);
+
+        return "play";
     }
 }
