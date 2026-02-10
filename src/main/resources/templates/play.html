@@ -14,14 +14,19 @@
                 </div>
 
                 <div class="code-display">
-                    <pre><code th:text="${problem.code}">//Code appears here</code></pre>
+                    <textarea
+                            name="editableCode"
+                            th:text="${problem.code}"
+                            spellcheck="false"
+                            style="font-family: 'Courier New', Courier, monospace; width: 100%; height: 300px; background: #282c34; color: #abb2bf; padding: 15px; border-radius: 8px;"
+                    ></textarea>
                 </div>
-                <div class="interaction-aread">
-                    <form th:action="@{/check-answer}" method="post">
-                        <input type="hidden" name="problemId" th:value="${problem.id}">
-                        <input type="text" name="userAnswer" placeholder="your answer m'lady?">
-                        <button type="submit" class="btn-promary">Submit</button>
-                    </form>
+
+                <div class="interaction-area"> <form th:action="@{/check-answer}" method="post">
+                    <input type="hidden" name="problemId" th:value="${problem.id}">
+
+                    <button type="submit" class="btn-primary">Submit</button>
+                </form>
                 </div>
             </div>
         </div>

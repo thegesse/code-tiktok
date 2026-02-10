@@ -30,7 +30,7 @@ public class CodetokApplication {
 
             if (userRepo.count() == 0) {
                 Difficulty beginner = diffRepo.findAll().stream()
-                        .filter(d -> "expert".equals(d.getLevel()))
+                        .filter(d -> "beginner".equals(d.getLevel()))
                         .findFirst()
                         .orElseThrow(() -> new RuntimeException("Difficulty not found"));
 
