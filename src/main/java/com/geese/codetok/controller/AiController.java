@@ -1,10 +1,11 @@
 package com.geese.codetok.controller;
 
+import com.geese.codetok.model.CodeProblem;
+import com.geese.codetok.repository.CodeProblemRepository;
 import com.geese.codetok.service.Ai.AiService;
 import com.geese.codetok.service.Ai.PromptTopics;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
 @RequestMapping("/api/challenge")

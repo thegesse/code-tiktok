@@ -39,4 +39,8 @@ public class CodeProblemService {
 
         return codeProblemRepository.save(newProblem);
     }
+    public CodeProblem findById(Long id) {
+        return codeProblemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Problem not found with id: " + id));
+    }
 }

@@ -26,7 +26,7 @@ public class AiService {
                 "Generate a short Java code snippet for a %s level programmer. " +
                         "The snippet must contain exactly one error that would cause the program to fail to run and send out a error message. The code snippet must not contain any comments that would indicate an answer but only have a few comments pertaining on how the code works " +
                         "Topic: %s. " +
-                        "Return the response in this format: CODE: [code with error] ERROR_MESSAGE: [error message] ANSWER: [what the code was originally meant to print out if ran correctly]", level, topic);
+                        "Return the response in this format: CODE: [code with error] ERROR_MESSAGE: [error message] Expected result: [what the code was originally meant to print out if ran correctly], Answer: [correction to the code]", level, topic);
 
         // This creates the empty config object the method is looking for
         com.google.genai.types.GenerateContentConfig config =
@@ -46,5 +46,25 @@ public class AiService {
     public String intermediateCodeProblem(String topic) {return getProblem("intermediate", topic);}
     public String expertCodeProblem(String topic) {return getProblem("expert", topic);}
 
-    // reminder to implement a longer format for code puzzles feature in the future
+    // to verify user answer
+
+    public String verifyAnswers(String originalCode, String userSolution) {
+        String prompt = String.format(
+                "You are a code judge for a game called Codetok. " +
+                        "ORIGINAL PROBLEM CODE (has an error): \n%s\n\n" +
+                        "USER'S PROPOSED FIX: \n%s\n\n" +
+                        "Determine if the user's fix correctly addresses the error. " +
+                        "Return the response in this EXACT format: " +
+                        "RESULT: [PASS/FAIL] FEEDBACK: [Short one-sentence explanation]",
+                originalCode, userSolution);
+
+        com.google.genai.types.GenerateContentConfig config = com.google.genai.types.GenerateContentConfig.builder().build();
+        try {
+            GenerateContentResponse response = client.models.generateContent(this.model, prompt, config);
+            return response.text();
+        }catch (Exception e) {
+            System.err.println("Verification Failed: " + e.getMessage());
+            return "RESULT: FAIL FEEDBACK: Service temporarily unavailable.";
+        }
+    }
 }

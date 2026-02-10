@@ -4,33 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Codetok - Play</title>
+    <style>
+        .alert { padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    </style>
 </head>
 <body class="play-page">
-    <div class="play-page">
-        <div class="feed-container">
-            <div class="code-card">
-                <div class="card-header">
-                    <span class="difficulty-badge" th:text="${problem.difficulty.level}">Beginner</span>
-                </div>
 
-                <div class="code-display">
-                    <textarea
-                            name="editableCode"
-                            th:text="${problem.code}"
-                            spellcheck="false"
-                            style="font-family: 'Courier New', Courier, monospace; width: 100%; height: 300px; background: #282c34; color: #abb2bf; padding: 15px; border-radius: 8px;"
-                    ></textarea>
-                </div>
 
-                <div class="interaction-area"> <form th:action="@{/check-answer}" method="post">
-                    <input type="hidden" name="problemId" th:value="${problem.id}">
+<div class="feed-container">
 
-                    <button type="submit" class="btn-primary">Submit</button>
-                </form>
-                </div>
-            </div>
-        </div>
+    <div th:if="${message == 'PASS'}" class="alert alert-success">
+        Correct! The AI verified your fix.
+    </div>
+    <div th:if="${message == 'FAIL'}" class="alert alert-danger">
+        Not quite. Check your logic and try again!
     </div>
 
+    <div class="code-card">
+        <div class="code-display">
+            <label style="color: #abb2bf; font-size: 0.8rem; margin-bottom: 5px; display: block;">
+                Buggy Code (Reference):
+            </label>
+            <textarea
+                    th:text="${problem.code}"
+                    readonly
+                    spellcheck="false"
+                    style="font-family: 'Courier New', monospace; width: 100%; height: 200px; background: #1e2127; color: #7f848e; padding: 15px; border-radius: 8px; border: 1px solid #3e4451; margin-bottom: 20px; resize: none;"
+            ></textarea>
+        </div>
+
+        <div class="interaction-area">
+            <form th:action="@{/check-answer}" method="post">
+                <input type="hidden" name="problemId" th:value="${problem.id}">
+
+                <label for="userSolution" style="color: #abb2bf; font-size: 0.8rem; margin-bottom: 5px; display: block;">
+                    Your Corrected Code:
+                </label>
+                <textarea
+                        id="userSolution"
+                        name="userAnswer"
+                        placeholder="Type the corrected version here..."
+                        spellcheck="false"
+                        required
+                        style="font-family: 'Courier New', monospace; width: 100%; height: 300px; background: #282c34; color: #abb2bf; padding: 15px; border-radius: 8px; border: 2px solid #6200ee; margin-bottom: 15px;"
+                ></textarea>
+
+                <div class="button-group" style="display: flex; gap: 10px; align-items: center;">
+                    <button type="submit" class="btn-primary" style="background: #6200ee; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                        Submit Solution
+                    </button>
+                    <a th:href="@{/play}" class="btn-secondary" style="color: #6200ee; text-decoration: none;">
+                        Next Problem
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>
