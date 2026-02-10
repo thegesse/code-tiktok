@@ -24,9 +24,9 @@ public class AiService {
     private String getProblem(String level, String topic) {
         String prompt = String.format(
                 "Generate a short Java code snippet for a %s level programmer. " +
-                        "The snippet must contain exactly one logical or syntax error. " +
+                        "The snippet must contain exactly one error that would cause the program to fai to run and send out a error message. " +
                         "Topic: %s. " +
-                        "Return the response in this format: CODE: [code] ANSWER: [error message]", level, topic);
+                        "Return the response in this format: CODE: [code] ERROR_MESSAGE: [error message] ANSWER: [answer]", level, topic);
 
         // This creates the empty config object the method is looking for
         com.google.genai.types.GenerateContentConfig config =
