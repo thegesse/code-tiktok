@@ -57,10 +57,11 @@ public class ChallengePageController {
         CodeProblem problem = codeProblemService.findById(problemId);
         String result = aiService.verifyAnswers(problem.getCode(), userAnswer);
 
-        if (result.contains("PASS :")) {
+        if (result.toUpperCase().replace(":", "").contains("PASS")) {
             ra.addFlashAttribute("message", "PASS");
-        }else {
+        } else {
             ra.addFlashAttribute("message", "FAIL");
+            System.out.println("AI Verdict was: " + result);
         }
         return "redirect:/play";
     }

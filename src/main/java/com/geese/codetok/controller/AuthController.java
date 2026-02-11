@@ -1,6 +1,6 @@
 package com.geese.codetok.controller;
 
-import ch.qos.logback.core.model.Model;
+import org.springframework.ui.Model;
 import com.geese.codetok.service.auth.AuthService;
 import com.geese.codetok.model.User;
 import jakarta.servlet.http.HttpSession;
@@ -28,9 +28,9 @@ public class AuthController {
         User user = authService.loginUser(email, password);
         if (user != null) {
             session.setAttribute("user", user);
-            return "redirect:/play";
+            return "redirect:/dashBoard";
         } else {
-            model.addText("error");
+            model.addAttribute("error");
             return "login";
         }
     }

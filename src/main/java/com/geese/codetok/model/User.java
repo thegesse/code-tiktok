@@ -34,4 +34,17 @@ public class User {
     @NotBlank(message = "Email is required")
     @Column(unique = true, nullable = false)
     private String email;
+
+
+    @Builder.Default
+    private java.time.LocalDateTime joinDate = java.time.LocalDateTime.now();
+    @PrePersist
+    protected void onCreate() {
+        if (this.joinDate == null) {
+            this.joinDate = java.time.LocalDateTime.now();
+        }
+    }
+
+    @Builder.Default
+    private Integer points = 0;
 }
