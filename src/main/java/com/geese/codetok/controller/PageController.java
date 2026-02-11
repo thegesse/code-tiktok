@@ -28,14 +28,11 @@ public class PageController {
     public String showDashboard(HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
 
-        // If the session is empty, redirect to login so we don't crash the page
         if (user == null) {
             return "redirect:/login";
         }
-
-        // THIS IS THE CRITICAL LINE:
         model.addAttribute("user", user);
 
-        return "dashBoard"; // Matches your dashBoard.html filename
+        return "dashBoard";
     }
 }
