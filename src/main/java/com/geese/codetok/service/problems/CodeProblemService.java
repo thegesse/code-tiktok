@@ -2,10 +2,13 @@ package com.geese.codetok.service.problems;
 
 import com.geese.codetok.model.CodeProblem;
 import com.geese.codetok.model.Difficulty;
+import com.geese.codetok.model.User;
 import com.geese.codetok.repository.CodeProblemRepository;
 import com.geese.codetok.repository.DifficultyRepository;
 import com.geese.codetok.service.Ai.AiService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CodeProblemService {
@@ -42,5 +45,10 @@ public class CodeProblemService {
     public CodeProblem findById(Long id) {
         return codeProblemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Problem not found with id: " + id));
+    }
+
+    public List<CodeProblem> getRecentPuzzlesForUser(User user) {
+
+        return codeProblemRepository.findTop5ByOrderByIdDesc(user.getId());
     }
 }

@@ -16,4 +16,6 @@ public interface CodeProblemRepository extends JpaRepository<CodeProblem, Long> 
     List<CodeProblem> findByDifficultyId(Long difficultyId);
     @Query(value = "SELECT * FROM code_problems WHERE difficulty_id = ?1 ORDER BY RAND() LIMIT 1", nativeQuery = true)
     CodeProblem findRandomByDifficulty(Long difficultyId);
+
+    List<CodeProblem> findTop5ByOrderByIdDesc(Long userId);
 }

@@ -14,25 +14,34 @@
             <p>Joined: <span th:text="${#temporals.format(user.joinDate, 'MMM yyyy')}">Feb 2026</span></p>
         </div>
 
-        <div class="card stats">
-            <div class="stat-item">
-                <span class="label">Total Points</span>
-                <span class="value" th:text="${user.points}">1,250</span>
-            </div>
-            <div class="stat-item">
-                <span class="label">Streak</span>
-                <span class="value">🔥 5 Days</span>
-            </div>
-        </div>
 
         <div class="card history" style="grid-column: span 2;">
             <h3>Recent Puzzles</h3>
             <table>
-                <tr th:each="attempt : ${recentAttempts}">
-                    <td th:text="${attempt.topic}">Java Loops</td>
-                    <td th:text="${attempt.status}" th:class="${attempt.status == 'PASS' ? 'text-success' : 'text-danger'}">PASS</td>
-                    <td th:text="${#temporals.format(attempt.date, 'dd/MM/yy')}">10/02/26</td>
+                <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Code Snippet</th> <th>Status</th>
+                    <th>ID</th>
                 </tr>
+                </thead>
+                <tbody>
+                <tr th:each="puzzle : ${puzzles}">
+                    <td th:text="${puzzle.code != null ? 'Java' : 'Unknown'}">Type</td>
+
+                    <td>
+        <textarea
+                readonly
+                th:text="${puzzle.code}"
+                style="width: 100%; height: 80px; background: #2d2d2d; color: #bb86fc;
+                   border: 1px solid #444; border-radius: 4px; font-family: 'Courier New', monospace;
+                   font-size: 0.8rem; padding: 8px; resize: none; overflow-y: auto;"
+        ></textarea>
+                    </td>
+
+                    <td class="text-success">COMPLETED</td>
+                </tr>
+                </tbody>
             </table>
         </div>
     </div>
