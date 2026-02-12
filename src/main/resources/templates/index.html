@@ -13,8 +13,14 @@
 
     <div class="action-area">
         <div class="auth-options">
-            <a th:href="@{/login}" class="btn-secondary">Login</a>
-            <a th:href="@{/register}" class="btn-outline">Sign Up</a>
+            <th:block th:if="${session.user == null}">
+                <a th:href="@{/login}" class="btn-secondary">Login</a>
+                <a th:href="@{/register}" class="btn-outline">Sign Up</a>
+            </th:block>
+
+            <th:block th:if="${session.user != null}">
+                <a th:href="@{/dashBoard}" class="btn-secondary">Go to Dashboard</a>
+            </th:block>
         </div>
     </div>
 </div>
