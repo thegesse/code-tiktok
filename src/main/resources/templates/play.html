@@ -2,66 +2,60 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Codetok - Play</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
+
     <style>
+        .CodeMirror { height: 350px; border-radius: 8px; font-family: 'Courier New', monospace; }
         .alert { padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; }
-        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .alert-danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert-success { background: #d4edda; color: #155724; }
+        .alert-danger { background: #f8d7da; color: #721c24; }
     </style>
 </head>
 <body class="play-page">
 
 <div th:replace="~{fragments/nav :: navbar}"></div>
-<div class="feed-container">
 
-    <div th:if="${message == 'PASS'}" class="alert alert-success">
-        Correct! The AI verified your fix.
-    </div>
-    <div th:if="${message == 'FAIL'}" class="alert alert-danger">
-        Not quite. Check your logic and try again!
-    </div>
+<div class="feed-container">
+    <div th:if="${message == 'PASS'}" class="alert alert-success">Correct! The AI verified your fix.</div>
+    <div th:if="${message == 'FAIL'}" class="alert alert-danger">Not quite. Check your logic and try again!</div>
 
     <div class="code-card">
-        <div class="code-display">
-            <label style="color: #abb2bf; font-size: 0.8rem; margin-bottom: 5px; display: block;">
-                Buggy Code (Reference):
-            </label>
-            <textarea
-                    th:text="${problem.code}"
-                    readonly
-                    spellcheck="false"
-                    style="font-family: 'Courier New', monospace; width: 100%; height: 200px; background: #1e2127; color: #7f848e; padding: 15px; border-radius: 8px; border: 1px solid #3e4451; margin-bottom: 20px; resize: none;"
-            ></textarea>
-        </div>
+        <h3>Buggy Code:</h3>
+        <pre th:text="${problem.code}" style="background: #1e2127; color: #7f848e; padding: 15px; border-radius: 8px; overflow-x: auto;"></pre>
 
-        <div class="interaction-area">
-            <form th:action="@{/check-answer}" method="post">
-                <input type="hidden" name="problemId" th:value="${problem.id}">
+        <form th:action="@{/check-answer}" method="post" id="codeForm">
+            <input type="hidden" name="problemId" th:value="${problem.id}">
 
-                <label for="userSolution" style="color: #abb2bf; font-size: 0.8rem; margin-bottom: 5px; display: block;">
-                    Your Corrected Code:
-                </label>
-                <textarea
-                        id="userSolution"
-                        name="userAnswer"
-                        placeholder="Type the corrected version here..."
-                        spellcheck="false"
-                        required
-                        style="font-family: 'Courier New', monospace; width: 100%; height: 300px; background: #282c34; color: #abb2bf; padding: 15px; border-radius: 8px; border: 2px solid #6200ee; margin-bottom: 15px;"
-                ></textarea>
+            <label>Your Corrected Code:</label>
+            <div id="editor-container"></div>
 
-                <div class="button-group" style="display: flex; gap: 10px; align-items: center;">
-                    <button type="submit" class="btn-primary" style="background: #6200ee; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
-                        Submit Solution
-                    </button>
-                    <a th:href="@{/play}" class="btn-secondary" style="color: #6200ee; text-decoration: none;">
-                        Next Problem
-                    </a>
-                </div>
-            </form>
-        </div>
+            <input type="hidden" name="userAnswer" id="userAnswer">
+
+            <div class="button-group">
+                <button type="submit">Submit Solution</button>
+                <a th:href="@{/play}">Next Problem</a>
+            </div>
+        </form>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/clike/clike.min.js"></script>
+
+<script>
+    const editor = CodeMirror(document.getElementById("editor-container"), {
+        lineNumbers: true,
+        theme: "dracula",
+        mode: "text/x-java",
+        value: `[[${problem.code}]]`
+    });
+
+    document.getElementById("codeForm").addEventListener("submit", function() {
+        document.getElementById("userAnswer").value = editor.getValue();
+    });
+</script>
 </body>
 </html>
