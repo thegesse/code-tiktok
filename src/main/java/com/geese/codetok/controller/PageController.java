@@ -3,6 +3,7 @@ package com.geese.codetok.controller;
 import com.geese.codetok.model.CodeProblem;
 import com.geese.codetok.model.User;
 import com.geese.codetok.service.problems.CodeProblemService;
+import com.geese.codetok.service.settings.SettingService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +14,11 @@ import java.util.List;
 @Controller
 public class PageController {
     private final CodeProblemService codeProblemService;
+    private final SettingService settingService;
 
-    public PageController(CodeProblemService codeProblemService) {
+    public PageController(CodeProblemService codeProblemService, SettingService settingService) {
         this.codeProblemService = codeProblemService;
+        this.settingService = settingService;
     }
 
     @GetMapping("/")
@@ -46,5 +49,20 @@ public class PageController {
         model.addAttribute("user", user);
         model.addAttribute("puzzles", recent);
         return "dashBoard";
+    }
+
+    @GetMapping("/settings")
+    public String settingsPage(HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) return "redirect:/login";
+        model.addAttribute("user", user);
+        model.addAttribute("allDifficulties", settingService.getAllDifficulties());
+        return "settings";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
     }
 }

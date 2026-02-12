@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Codetok - Settings</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+<div th:replace="~{fragments/nav :: navbar}"></div>
+
+<h1>Account Settings</h1>
+
+<div th:if="${message}" class="success-msg" th:text="${message}"></div>
+<div th:if="${error}" class="error-msg" th:text="${error}"></div>
+
+<hr>
+
+<section>
+    <h3>Change Username</h3>
+    <form th:action="@{/settings/update-username}" method="post">
+        <input type="text" name="newUsername" th:value="${user.username}" required>
+        <button type="submit">Update Name</button>
+    </form>
+</section>
+
+<section>
+    <h3>Set Practice Difficulty</h3>
+    <form th:action="@{/settings/update-difficulty}" method="post">
+        <select name="difficultyId">
+            <option th:each="diff : ${allDifficulties}"
+                    th:value="${diff.id}"
+                    th:text="${diff.level}"
+                    th:selected="${user.difficulty != null && diff.id == user.difficulty.id}">
+            </option>
+        </select>
+        <button type="submit">Save Difficulty</button>
+    </form>
+</section>
+
+<section>
+    <h3>Security</h3>
+    <form th:action="@{/settings/update-password}" method="post">
+        <div>
+            <label>Current Password:</label>
+            <input type="password" name="oldPass" required>
+        </div>
+
+        <div>
+            <label>New Password:</label>
+            <input type="password" name="newPass" required>
+        </div>
+
+        <div>
+            <label>Confirm New Password:</label>
+            <input type="password" name="confirmPass" required>
+        </div>
+
+        <button type="submit">Change Password</button>
+    </form>
+</section>
+
+</body>
+</html>
