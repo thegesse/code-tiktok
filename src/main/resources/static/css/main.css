@@ -1,0 +1,121 @@
+/* --- 1. VARIABLES --- */
+:root {
+    --bg-color: #0f0f0f;         /* Deep black main background */
+    --surface-color: #1a1a1a;    /* Slightly lighter grey for sections */
+    --primary: #bb86fc;
+    --secondary: #03dac6;
+    --error: #cf6679;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --border-color: #333333;
+    --fixed-width: 1000px;       /* Standard PC width */
+    --standard-spacing: 40px;    /* Global spacing unit */
+}
+
+/* --- 2. GLOBAL RESET & BASE --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    line-height: 1.8;             /* Increased for better readability */
+    min-width: 1200px;           /* Prevents layout collapse on resize */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 0;             /* Large top/bottom breathing room */
+}
+
+/* --- 3. CONTAINERS & SPACING --- */
+.feed-container, .hero-container, .settings-container {
+    width: var(--fixed-width);
+    margin: 0 auto;
+}
+
+h1, h2, h3 {
+    margin-bottom: var(--standard-spacing);
+    letter-spacing: 0.5px;
+}
+
+/* --- 4. SECTION STYLING (Differentiated Background) --- */
+section, .code-card {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 50px;               /* Generous internal spacing */
+    margin-bottom: 60px;         /* Significant gap between blocks */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Subtle depth */
+}
+
+/* --- 5. BUTTONS & INTERACTION --- */
+.button-group {
+    display: flex;
+    gap: 25px;                   /* Large space between buttons */
+    margin-top: 30px;
+}
+
+button, .btn-primary, .btn-secondary, .btn-outline {
+    padding: 14px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary { background-color: var(--primary); color: #000; }
+.btn-primary:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+.btn-secondary { background-color: var(--secondary); color: #000; }
+.btn-secondary:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+/* --- 6. FORM ELEMENTS --- */
+label {
+    display: block;
+    margin-bottom: 15px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+input, select {
+    width: 400px;                /* Consistent PC width */
+    padding: 15px;
+    margin-bottom: 25px;         /* Spaced out from the next element */
+    background: #252525;
+    border: 1px solid var(--border-color);
+    color: white;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* --- 7. CODE BLOCKS --- */
+pre {
+    background: #000000;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border: 1px solid #222;
+}
+
+/* --- 8. ALERTS --- */
+.alert {
+    width: var(--fixed-width);
+    padding: 20px;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.1rem;
+}
